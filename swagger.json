@@ -1,0 +1,51 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "Random Sentence ChatBot",
+      "version": "1.0.0"
+    },
+    "servers": [
+      {
+        "url": "http://localhost:3000",
+        "description": "Local server"
+      }
+    ],
+    "paths": {
+      "/api/chatbot/random": {
+        "get": {
+          "tags": [
+            "ChatBot"
+          ],
+          "summary": "Nonsensical ChatBot",
+          "description": "Get a random nonsensical response from the chatbot",
+          "responses": {
+            "200": {
+              "description": "ChatBot replied",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "status": "success",
+                    "message": "Response received successfully",
+                    "data": {
+                      "message": "Your random response here"
+                    }
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "status": "error",
+                    "error": "Internal Server Error"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }

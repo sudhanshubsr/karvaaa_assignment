@@ -26,6 +26,9 @@ importers:
       random-js:
         specifier: ^2.1.0
         version: 2.1.0
+      swagger-ui-express:
+        specifier: ^5.0.1
+        version: 5.0.1(express@4.20.0)
     devDependencies:
       chai:
         specifier: ^5.1.1
@@ -663,6 +666,15 @@ packages:
   supports-color@8.1.1:
     resolution: {integrity: sha512-MpUEN2OodtUzxvKQl72cUF7RQ5EiHsGvSsVG0ia9c5RbWGL2CI4C7EpPS8UTBIplnlzZiNuV56w+FuNxy3ty2Q==}
     engines: {node: '>=10'}
+
+  swagger-ui-dist@5.17.14:
+    resolution: {integrity: sha512-CVbSfaLpstV65OnSjbXfVd6Sta3q3F7Cj/yYuvHMp1P90LztOLs6PfUnKEVAeiIVQt9u2SaPwv0LiH/OyMjHRw==}
+
+  swagger-ui-express@5.0.1:
+    resolution: {integrity: sha512-SrNU3RiBGTLLmFU8GIJdOdanJTl4TOmT27tt3bWWHppqYmAZ6IDuEuBvMU6nZq0zLEe6b/1rACXCgLZqO6ZfrA==}
+    engines: {node: '>= v0.10.32'}
+    peerDependencies:
+      express: '>=4.0.0 || >=5.0.0-beta'
 
   to-regex-range@5.0.1:
     resolution: {integrity: sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==}
@@ -1400,6 +1412,13 @@ snapshots:
   supports-color@8.1.1:
     dependencies:
       has-flag: 4.0.0
+
+  swagger-ui-dist@5.17.14: {}
+
+  swagger-ui-express@5.0.1(express@4.20.0):
+    dependencies:
+      express: 4.20.0
+      swagger-ui-dist: 5.17.14
 
   to-regex-range@5.0.1:
     dependencies:
