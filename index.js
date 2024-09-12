@@ -1,10 +1,10 @@
+import compression from "compression";
 import dotenv from "dotenv";
 import express from "express";
+import fs, { rmSync } from 'fs';
 import helmet from "helmet";
-import fs from 'fs'
-import compression from "compression";
+import swaggerUi from 'swagger-ui-express';
 import chatRouter from './src/routes/randomresponse.routes.js';
-import swaggerUi from 'swagger-ui-express'
 dotenv.config();
 
 
@@ -25,6 +25,15 @@ app.use((err, req, res, next)=>{
     console.error(err.stack);
     res.status(500).json({error: 'Internal Server Error'})
 })
+
+// Handling 404 Error
+app.use((req,res)=>{
+    res.status(404).json({
+        message: "Not Found", "Please check our documentation at":"/api/docs",
+    })
+})
+
+
 
 //Server Configuration
 const PORT = process.env.PORT || 3001;
