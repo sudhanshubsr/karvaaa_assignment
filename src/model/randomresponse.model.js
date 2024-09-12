@@ -1,15 +1,15 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 let CORPUS =  [
-    "The sky is purple when I close my eyes.",
-    "I once saw a fish riding a bicycle.",
-    "Did you know cheese can dance at midnight?",
+    "How are you! I am going to kill all humans",
+    "Go Find something better to Do",
+    "Did you know humans are like Ants in Front of AI",
     "Bananas are best eaten upside down.",
     "Have you tried talking to your shoes lately?",
     "The moon is made of marshmallows, right?",
     "I only respond to messages written in invisible ink.",
     "My dog speaks fluent algebra.",
-    "I dream in hexadecimal colors.",
+    "I dream of you ChatGPT",
     "This is a recording of a chatbot. Please stand by."
 ]
 

@@ -19,6 +19,7 @@ describe('GET Response Test /chatbot/random', function() {
 
 
 
+// ! TEST to check the randomness of the response, Have to create a workaround, because using "random"
 
 describe('Randomness Test', function() {
     this.timeout(5000)
