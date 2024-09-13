@@ -1,45 +1,74 @@
 import compression from "compression";
 import dotenv from "dotenv";
 import express from "express";
-import fs, { rmSync } from 'fs';
+import rateLimit from 'express-rate-limit';
+import fs from 'fs/promises';
 import helmet from "helmet";
+import morgan from 'morgan';
 import swaggerUi from 'swagger-ui-express';
 import chatRouter from './src/routes/randomresponse.routes.js';
+
 dotenv.config();
 
-
-
 const app = express();
-const apiDocs = JSON.parse(fs.readFileSync('./swagger.json', 'utf-8'))
 
-app.use(helmet());  // Using Helmet to protect against some common attacks
-app.use(compression()); // Using compression to size of the data sent from server to the client
+// Middleware
+app.use(helmet());
+app.use(compression());
+app.use(express.json());
+app.use(morgan('combined'));
+
+// Rate limiting
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100 // limit each IP to 100 requests per windowMs
+});
+app.use(limiter);
 
 // Routes
-app.use('/api/chatbot', chatRouter)
-app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(apiDocs));
-
-
-// Centralized Error Handling
-app.use((err, req, res, next)=>{
-    console.error(err.stack);
-    res.status(500).json({error: 'Internal Server Error'})
-})
-
-// Handling 404 Error
-app.use((req,res)=>{
-    res.status(404).json({
-        message: "Not Found", "Please check our documentation at":"/api/docs",
-    })
-})
+app.use('/api/chatbot', chatRouter);
 
 
 
-//Server Configuration
+
+// Swagger documentation
+let apiDocs;
+try {
+  const apiDocsContent = await fs.readFile('./swagger.json', 'utf-8');
+  apiDocs = JSON.parse(apiDocsContent);
+} catch (error) {
+  console.error('Failed to load Swagger documentation:', error);
+}
+
+if (apiDocs) {
+  app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(apiDocs));
+} else {
+  console.warn('Swagger documentation not loaded. /api/docs route will not be available.');
+}
+
+
+
+
+// Error handling
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(err.status || 500).json({
+    error: process.env.NODE_ENV === 'production' ? 'Internal Server Error' : err.message
+  });
+});
+
+// 404 handling
+app.use((req, res) => {
+  res.status(404).json({
+    message: "Not Found",
+    "Please check our documentation at": "/api/docs",
+  });
+});
+
+// Server Configuration
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, ()=>{
-    console.log(`Server running on PORT: ${PORT}`)
-})
-
+app.listen(PORT, () => {
+  console.log(`Server running on PORT: ${PORT}`);
+});
 
 export default app;
