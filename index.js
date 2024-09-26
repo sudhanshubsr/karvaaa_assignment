@@ -9,7 +9,6 @@ import swaggerUi from 'swagger-ui-express';
 import chatRouter from './src/routes/randomresponse.routes.js';
 
 dotenv.config();
-
 const app = express();
 
 // Middleware
@@ -27,8 +26,6 @@ app.use(limiter);
 
 // Routes
 app.use('/api/chatbot', chatRouter);
-
-
 
 
 // Swagger documentation
